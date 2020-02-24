@@ -27,6 +27,8 @@ import androidx.viewpager.widget.PagerAdapter;
 /**
  * Create by KunMinX at 19/6/15
  */
+
+//TODO - oldjii : 标准的ViewPagerAdapter的构建方法（重写4个方法）
 public class CommonViewPagerAdapter extends PagerAdapter {
 
     private final int count;

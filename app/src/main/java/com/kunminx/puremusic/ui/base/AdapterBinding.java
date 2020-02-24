@@ -105,6 +105,7 @@ public class AdapterBinding {
         }
     }
 
+//    TODO - oldjii : 将TabLayout与ViewPager绑定（先构建ViewPagerAdapter并给ViewPager设置，然后TabLayout.setupWithViewPager(viewpager)绑定关系
     @BindingAdapter(value = {"initTabAndPage"}, requireAll = false)
     public static void initTabAndPage(TabLayout tabLayout, boolean initTabAndPage) {
         if (initTabAndPage) {
@@ -125,6 +126,8 @@ public class AdapterBinding {
     public static void setIcon(MaterialIconView view, MaterialDrawableBuilder.IconValue iconValue) {
         view.setIcon(iconValue);
     }
+
+//    TODO - oldjii : 这个加载WebView的操作看不懂
 
     @SuppressLint("SetJavaScriptEnabled")
     @BindingAdapter(value = {"pageAssetPath"}, requireAll = false)
@@ -170,6 +173,8 @@ public class AdapterBinding {
 
     @BindingAdapter(value = {"onClickWithDebouncing"}, requireAll = false)
     public static void onClickWithDebouncing(View view, View.OnClickListener clickListener) {
+        //TODO - oldjii : 使用了AndroidUtilCode工具库，大量减少重复代码
+        //TODO - oldjii : applySingleDebouncing() 的作用是事件防抖(防止重复相应事件)
         ClickUtils.applySingleDebouncing(view, clickListener);
     }
 }

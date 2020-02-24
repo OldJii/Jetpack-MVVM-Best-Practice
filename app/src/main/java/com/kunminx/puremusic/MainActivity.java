@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,18 +57,22 @@ public class MainActivity extends BaseActivity {
         mBinding.setLifecycleOwner(this);
         mBinding.setVm(mMainActivityViewModel);
 
-        mSharedViewModel.activityCanBeClosedDirectly.observe(this, aBoolean -> {
-            NavController nav = Navigation.findNavController(this, R.id.main_fragment_host);
-            if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
-                nav.navigateUp();
+        mSharedViewModel.activityCanBeClosedDirectly.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                //TODO - oldjii : 因为该Activity中有多个NavHostFragment，所以不能使用单View的findNavController()
+                NavController nav = Navigation.findNavController(MainActivity.this, R.id.main_fragment_host);
+                if (nav.getCurrentDestination() != null && nav.getCurrentDestination().getId() != R.id.mainFragment) {
+                    nav.navigateUp();
 
-                //TODO tip 6: 同 tip 5.
+                    //TODO tip 6: 同 tip 5.
 
-            } else if (mBinding.dl != null && mBinding.dl.isDrawerOpen(GravityCompat.START)) {
-                mBinding.dl.closeDrawer(GravityCompat.START);
+                } else if (mBinding.dl != null && mBinding.dl.isDrawerOpen(GravityCompat.START)) {
+                    mBinding.dl.closeDrawer(GravityCompat.START);
 
-            } else {
-                super.onBackPressed();
+                } else {
+                    MainActivity.super.onBackPressed();
+                }
             }
         });
 
@@ -77,16 +82,18 @@ public class MainActivity extends BaseActivity {
 
         // 规避了视图的一致性问题，因为 横屏布局 根本就没有 drawerLayout，此处如果用传统的视图调用方式，会很容易疏忽而造成空引用。
 
-        mSharedViewModel.openOrCloseDrawer.observe(this, aBoolean -> {
-            //TODO yes:
+        mSharedViewModel.openOrCloseDrawer.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                //TODO yes:
 
-            //TODO 此处绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
+                //TODO 此处绑定的状态，使用 LiveData 而不是 ObservableField，主要是考虑到 ObservableField 具有防抖的特性，不适合该场景。
 
-            //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
+                //如果这么说还不理解的话，详见 https://xiaozhuanlan.com/topic/9816742350
 
-            mMainActivityViewModel.openDrawer.setValue(aBoolean);
+                mMainActivityViewModel.openDrawer.setValue(aBoolean);
 
-            //TODO do not:（容易埋下视图调用的一致性隐患）
+                //TODO do not:（容易埋下视图调用的一致性隐患）
 
             /*if (mBinding.dl != null) {
                 if (aBoolean && !mBinding.dl.isDrawerOpen(GravityCompat.START)) {
@@ -95,21 +102,25 @@ public class MainActivity extends BaseActivity {
                     mBinding.dl.closeDrawer(GravityCompat.START);
                 }
             }*/
+            }
         });
 
-        mSharedViewModel.enableSwipeDrawer.observe(this, aBoolean -> {
+        mSharedViewModel.enableSwipeDrawer.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
 
-            //TODO yes:
+                //TODO yes:
 
-            mMainActivityViewModel.allowDrawerOpen.setValue(aBoolean);
+                mMainActivityViewModel.allowDrawerOpen.setValue(aBoolean);
 
-            // TODO tip 7: do not:（容易埋下视图调用的一致性隐患）
+                // TODO tip 7: do not:（容易埋下视图调用的一致性隐患）
 
             /*if (mBinding.dl != null) {
                 mBinding.dl.setDrawerLockMode(aBoolean
                         ? DrawerLayout.LOCK_MODE_UNLOCKED
                         : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             }*/
+            }
         });
 
 

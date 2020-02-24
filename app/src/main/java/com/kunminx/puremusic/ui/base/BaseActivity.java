@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.kunminx.architecture.data.manager.NetworkStateManager;
 import com.kunminx.architecture.utils.AdaptScreenUtils;
@@ -80,6 +81,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected ViewModelProvider getActivityViewModelProvider(AppCompatActivity activity) {
+
+        // TODO - oldjii : arg1 = ViewModelStoreOwner, atg2 = Factory; 除去ViewModelProviders.of()还可以使用这种方法创建ViewModel实例
         return new ViewModelProvider(activity, activity.getDefaultViewModelProviderFactory());
     }
 

@@ -30,6 +30,8 @@
 
     </data>
 
+<!--    TODO - oldjii : 这里使用的是CoordinatorLayout库，可以简洁的实现滑动覆盖的效果-->
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,6 +61,8 @@
                     android:src="@drawable/bg_home"
                     app:layout_collapseMode="parallax" />
 
+<!--                TODO - oldjii : 这里使用了noDrawable库，可以大量减少操作drawable的代码，其也是用Databinding实现-->
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/toolbar"
                     drawable_radius="@{8}"
@@ -71,6 +75,9 @@
                     android:layout_marginTop="37dp"
                     android:layout_marginEnd="12dp"
                     android:layout_marginBottom="12dp">
+
+<!--                    TODO - oldjii : 这里使用了materialiconlib库，里面有2000+多种Icon，通过materialIcon属性指定-->
+<!--                    TODO - oldjii : ?attr/selectableItemBackgroundBorderless 的作用是指定点击无边界波纹效果-->
 
                     <net.steamcrafted.materialiconlib.MaterialIconView
                         android:id="@+id/iv_menu"
@@ -165,6 +172,9 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<!--            TODO - oldjii : RecyclerView可以直接通过app:layoutManager属性指定LayoutManager-->
+<!--            TODO - oldjii : RecyclerView的android:clipToPadding属性可以使滑动时忽略父布局的padding-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv"

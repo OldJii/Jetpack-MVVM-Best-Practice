@@ -18,6 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--        TODO - oldjii : 这里使用SlidingUpPanelLayout库，可以方便的再竖直方向上控制多个panel，链接：https://github.com/woxingxiao/SlidingUpPanelLayout-->
+<!--        TODO - oldjii : SlidingUpPanelLayout：       umanoDragView属性指定拖拽效果的热区-->
+
         <com.sothree.slidinguppanel.SlidingUpPanelLayout
             android:id="@+id/sliding_layout"
             android:layout_width="match_parent"
